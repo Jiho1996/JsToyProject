@@ -1,3 +1,3 @@
-val = 'test'
+let kk = '사과'
 
-console.log(parseInt(val))
+console.log(`${kk}입니다.`)

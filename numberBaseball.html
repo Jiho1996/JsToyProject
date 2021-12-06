@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자 야구</title>
+    <style>
+        #form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <input type="text" id="input">
+        <button type="button">확인</button>
+      <!-- form 태그의 submit시, 기본동작이 새로고침임.-->
+      <!-- form 태그를 -->
+      <div id="logs"></div>
+      <div id="cnt"></div>
+    </form>
+
+
+<script>
+    // undefine은 False 로 인식.
+    // new Set 은 리스트의 중복 제거.
+    
+    let primeNum = ''
+    const $input = document.querySelector('#input')
+    const $button = document.querySelector('button')
+    const $logs = document.querySelector('#logs')
+    const $cnt = document.querySelector("#cnt")
+    let cnt = 10
+    
+
+    for (let rn = 0 ; rn < 4; rn++){
+        primeNum += Math.floor(Math.random() * 9)
+    }
+
+    console.log(primeNum)
+
+    $button.addEventListener('click', onclickBtn)
+    $input.addEventListener('input',function(event){
+        guessWord = event.target.value
+        console.log(guessWord)
+    })
+
+    function onclickBtn(){
+        let strike = 0;
+        let ball = 0;
+        let homerun = 0;
+
+        if (guessWord.length != 4){
+            $logs.textContent = '네 자리가 아닙니다.'
+            return
+        }
+        else if (guessWord.length)
+
+        for (let i = 0; i < primeNum.length ; i++){
+            //console.log(guessWord, primeNum[i])
+            if (primeNum[i] == guessWord[i]){
+                strike ++;
+                
+            }
+            else if (guessWord.indexOf(primeNum[i])!= -1){
+                ball++;
+            }
+            
+        }
+        //console.log(strike, primeNum.length)
+        if (strike == primeNum.length){
+            $logs.textContent = 'HOMERUN!!'
+        }
+        else{
+            cnt --;
+            if (cnt < 0){
+                location.reload()
+                alert('게임 종료, 정답은 '+primeNum)
+            }
+            console.log(cnt)
+            $logs.textContent = 'strike : ${strike}'+' ball: '+ball
+           
+            $cnt.textContent = '남은 기회 ${cnt} : '+ cnt
+            $input.value = ''
+            // 하나로 줄바꿈시 $logs.innerHTML하고, </br>를 넣어준다.
+        }
+        $input.focus()
+    
+
+    }
+
+    
+</script>
+</body>
+</html>
